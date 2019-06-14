@@ -272,7 +272,8 @@ class Dasymetry:
 
         pop_name = self.configdict['pop_name']
 
-        parcels.loc[parcel, pop_name] = parcels.loc[parcel, pop_name] + numpeople
+        parcels.loc[parcel, pop_name] = (parcels.loc[parcel, pop_name]
+                                         + numpeople)
         blocks.loc[block, pop_name] = blocks.loc[block, pop_name] - numpeople
 
         return None
