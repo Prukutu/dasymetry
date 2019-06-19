@@ -97,8 +97,7 @@ class Dasymetry:
                       params[key] for key in params.keys()}
 
             for key in ('run_dir', 'input_dir', 'output_dir'):
-                print(key)
-                print(params[key])
+
                 params[key] = Path(params[key])
 
         # Allowed densities are in units of people/acre. Convertt to projection
