@@ -1,3 +1,4 @@
+from pathlib import Path
 import geopandas as gpd
 from tqdm import tqdm
 
@@ -71,7 +72,9 @@ class Dasymetry:
 
             return None
 
-        with open(rundir + 'namelist.config') as f:
+        rundir = Path(rundir)
+
+        with open(rundir / 'namelist.config') as f:
             lines = f.readlines()
 
             # Now that the namelist is a list, we don't need whitespace or
@@ -92,6 +95,11 @@ class Dasymetry:
 
             params = {key: params[key][0] if len(params[key]) == 1 else
                       params[key] for key in params.keys()}
+
+            for key in ('run_dir', 'input_dir', 'output_dir'):
+                print(key)
+                print(params[key])
+                params[key] = Path(params[key])
 
         # Allowed densities are in units of people/acre. Convertt to projection
         # units (1 acre = 43560 sq. ft)
@@ -127,7 +135,7 @@ class Dasymetry:
 
         df = gpd.read_file(filename)
 
-        print(filename + ' loaded!')
+        print(filename.name + ' loaded!')
 
         # Make all column names lowercase
         df.columns = map(str.lower, df.columns)
@@ -153,16 +161,16 @@ class Dasymetry:
         """
 
         population = (configdict['run_dir']
-                      + configdict['input_dir']
-                      + configdict['population_file'])
+                      / configdict['input_dir']
+                      / configdict['population_file'])
 
         block_df = self.load_geodataframe(population,
                                           configdict['population_fid'])
         block_df = block_df.loc[:, self.configdict['block_fields']]
 
         parcels = (configdict['run_dir']
-                   + configdict['input_dir']
-                   + configdict['parcels_file'])
+                   / configdict['input_dir']
+                   / configdict['parcels_file'])
 
         parcel_df = self.load_geodataframe(parcels,
                                            configdict['parcels_fid'])
@@ -187,7 +195,8 @@ class Dasymetry:
     def writeOutput(self, filename, parcels, subset=None):
         pop_name = self.configdict['pop_name']
         print('Writing output to CSV...')
-        parcels[pop_name].to_csv(filename, header=True)
+        outfile = self.configdict['output_dir'] / filename
+        parcels[pop_name].to_csv(outfile, header=True)
         print('Done!')
 
     def getOverpopParcels(self, parcel_df, block_df):
