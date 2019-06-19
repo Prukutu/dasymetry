@@ -1,10 +1,16 @@
 import sys
-sys.path.append('/home/luis/github/dasymetry/')
+from pathlib import Path
+
+# enter your dasymetry path
+dasypath = '/home/luis/github/dasymetry/'
+workdir = Path('/home/luis/Documents/Research/projects/test_dasymetry/')
+
+sys.path.append(dasypath)
 
 import dasymetry as dasy
 import matplotlib.pyplot as plt
 
-dasy = dasy.Dasymetry('/home/luis/Documents/Research/projects/test_dasymetry/')
+dasy = dasy.Dasymetry(workdir)
 dasy.load_namelist(dasy.rundir)
 dasy.load_source_files(dasy.configdict)
 
@@ -36,8 +42,8 @@ dasy.disaggregate_leftover(dasy.parcel_df, dasy.block_df)
 #                          linewidth=.25)
 # leg = ax.get_legend()
 # leg.set_bbox_to_anchor((.35, .2, 0.2, 0.2))
-# 
+#
 # fig.savefig('test.png', bbox_inches='tight')
 
 # Write output
-dasy.writeOutput('ACS2017_totpop_mappluto2017.csv', dasy.parcel_df)
+dasy.writeOutput('test.csv', dasy.parcel_df)
