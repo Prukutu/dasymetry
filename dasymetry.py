@@ -6,7 +6,7 @@ from tqdm import tqdm
 class Dasymetry:
 
     """ Class collecting tools to disaggregate socio-demographic data into
-        discrete parx   cels.
+        discrete parcels.
     """
 
     def __init__(self, rundir):
