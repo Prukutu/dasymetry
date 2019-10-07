@@ -1,3 +1,8 @@
+""" This scripy calls dasymetry.py. User can modify or call only the
+    methods they want to use. Please see the namelist file for info
+    on the parameters.
+"""
+
 import sys
 from pathlib import Path
 
