@@ -1,4 +1,4 @@
-""" This scripy calls dasymetry.py. User can modify or call only the
+""" This script calls dasymetry.py. User can modify or call only the
     methods they want to use. Please see the namelist file for info
     on the parameters.
 """
@@ -32,23 +32,6 @@ dasy.blocksToOverpop(dasy.parcel_df, dasy.block_df)
 dasy.disaggregate(dasy.parcel_df, dasy.block_df)
 dasy.disaggregate_leftover(dasy.parcel_df, dasy.block_df)
 
-# print('After disaggregating into res units:')
-# print(dasy.block_df['pop10'].sum())
-
-# Plot results
-# fig, ax = plt.subplots(figsize=(16, 9))
-# im = dasy.parcel_df.plot(column='pop10',
-#                          cmap='YlOrRd',
-#                          scheme='fisher_jenks',
-#                          edgecolor='black',
-#                          legend=True,
-#                          ax=ax,
-#                          k=10,
-#                          linewidth=.25)
-# leg = ax.get_legend()
-# leg.set_bbox_to_anchor((.35, .2, 0.2, 0.2))
-#
-# fig.savefig('test.png', bbox_inches='tight')
 
 # Write output
 dasy.writeOutput('test.csv', dasy.parcel_df)
